@@ -1,5 +1,10 @@
 let fs = require('fs');
-let table = JSON.parse(fs.readFileSync("power.json", "utf8"));
+
+const prompt = require('prompt-sync')({sigint: true});
+
+let filename = prompt('Enter the input filename: ');
+
+let table = JSON.parse(fs.readFileSync(filename, "utf8"));
 
 for (let i = 0; i < table.length; i++) {
     table[i].timeExcel = JSDateToExcelDate(new Date(table[i].time.$date));
@@ -15,4 +20,4 @@ function JSDateToExcelDate(inDate) {
     
     }
 
-fs.writeFileSync("powernew.json", JSON.stringify(table));
+fs.writeFileSync(filename.slice(0,-5)+"_converted.json", JSON.stringify(table));
